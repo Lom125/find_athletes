@@ -86,7 +86,7 @@ def find_athl(id_, session):
         dat_et = datetime(dat[0], dat[1], dat[2])
         
         for atl in all_atl_list:
-            if atl.id != atl_et.id and atl.height:
+            if atl.height and atl.birthdate:
                 dat = pars_date(atl.birthdate)
                 data = datetime(dat[0], dat[1], dat[2])
                 da = (dat_et - data)
