@@ -144,7 +144,7 @@ def main():
 
 
      # вызываем функцию печати на экран результатов поиска
-    print('Все атлеты')
+    print('Все пользователи в базе "user"')
     for user in all_users_list:
         print(user.id, ' Имя: ', user.first_name, ' Фамилия: ', user.last_name, ' Рост: ', user.height, ' Дата рождения: ', user.birthdate)
 
