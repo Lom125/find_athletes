@@ -76,7 +76,7 @@ def find_athl(id_, session):
     h_id = 1
     d_id = 1
     d = 1000000
-    query = session.query(Athelete).filter(Athelete.id == id_)
+    query = session.query(User).filter(User.id == id_)
     if query.count() == 0:
         print("Такого атлета нет")
     else:
