@@ -14,6 +14,23 @@ Base = declarative_base()
 
 # список всех имен таблиц в базе данных
 # print(engine.table_names())
+class Athelete(Base):
+
+    __tablename__ = 'athelete'
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    age = sa.Column(sa.Integer)
+    birthdate = sa.Column(sa.Text)
+    gender = sa.Column(sa.Text)
+    height = sa.Column(sa.Float)
+    weight = sa.Column(sa.Integer)
+    name = sa.Column(sa.Text)
+    gold_medals = sa.Column(sa.Integer)
+    silver_medals = sa.Column(sa.Integer)
+    bronze_medals = sa.Column(sa.Integer)
+    total_medals = sa.Column(sa.Integer)
+    sport = sa.Column(sa.Text)
+    country = sa.Column(sa.Text)
 
 class User(Base):
     """
@@ -59,17 +76,17 @@ def find_athl(id_, session):
     h_id = 1
     d_id = 1
     d = 1000000
-    query = session.query(User).filter(User.id == id_)
+    query = session.query(Athelete).filter(Athelete.id == id_)
     if query.count() == 0:
         print("Такого атлета нет")
     else:
-        all_atl_list = session.query(User).all()
+        all_atl_list = session.query(Athelete).all()
         atl_et = query[0]
         dat = pars_date(atl_et.birthdate)
         dat_et = datetime(dat[0], dat[1], dat[2])
         
         for atl in all_atl_list:
-            if atl.id != atl_et.id:
+            if atl.id != atl_et.id and atl.height:
                 dat = pars_date(atl.birthdate)
                 data = datetime(dat[0], dat[1], dat[2])
                 da = (dat_et - data)
@@ -78,6 +95,7 @@ def find_athl(id_, session):
                 if p < d:
                     d = p
                     d_id = atl.id
+                # print(atl_et.height, atl.height)
                 p = math.fabs(atl_et.height - atl.height)
                 if  p < dh:
                     dh = p
@@ -85,8 +103,8 @@ def find_athl(id_, session):
         near_height_atl = all_atl_list[h_id-1]
         near_birthdate_atl = all_atl_list[d_id-1]
 
-        print("Ближайший по росту атлет", near_height_atl.id,near_height_atl.first_name, near_height_atl.height)
-        print("Ближайший по дате рождения атлет", near_birthdate_atl.id,near_birthdate_atl.first_name, near_birthdate_atl.birthdate)
+        print("Ближайший по росту атлет", near_height_atl.id,near_height_atl.name, near_height_atl.height)
+        print("Ближайший по дате рождения атлет", near_birthdate_atl.id,near_birthdate_atl.name, near_birthdate_atl.birthdate)
 
 def connect_db():
     """
